@@ -22,6 +22,18 @@ function clearPriorityContainers() {
     toDosContainer.innerHTML = "";
 };
 
+// Fontionc pour vider mes divs de priorité dans le DOM
+function clearPriorityDiv() {
+    const priorityHigh = document.querySelector(".priority-high");
+    priorityHigh.innerHTML = `<h2>Urgent</h2>`;
+
+    const priorityMedium = document.querySelector(".priority-medium");
+    priorityMedium.innerHTML = `<h2>Priorité normale</h2>`;
+
+    const priorityLow = document.querySelector(".priority-low");
+    priorityLow.innerHTML = `<h2>Peut attendre</h2>`;
+}
+
 function createToDosCard(item, index) {
     const toDosCard = document.createElement("div");
     toDosCard.classList.add("to-dos-card");
@@ -32,6 +44,8 @@ function createToDosCard(item, index) {
     <p><strong>Description :</strong> ${item.description}</p>
     <p><strong>Due Date :</strong> ${item.dueDate}</p>
     <p><strong>Priority :</strong> ${item.priority}<p>
+    <br>
+    <button class="btn-delete-to-dos" type="button" data-id="${item.id}">Delete todos</button>
     `;
 
     return toDosCard;
@@ -39,33 +53,22 @@ function createToDosCard(item, index) {
 
 function appendCardToContainer(card, priority) {
 
-        // Sélectionne le bon conteneur en fonction de la priorité
-        let targetContainer;
-        if (priority === "priority-high") {
-            targetContainer = document.querySelector(".priority-high");
-        } else if (priority === "priority-medium") {
-            targetContainer = document.querySelector(".priority-medium");
-        } else if (priority === "priority-low") {
-            targetContainer = document.querySelector(".priority-low");
-        }
+    // Sélectionne le bon conteneur en fonction de la priorité
+    let targetContainer;
+    if (priority === "priority-high") {
+        targetContainer = document.querySelector(".priority-high");
+    } else if (priority === "priority-medium") {
+        targetContainer = document.querySelector(".priority-medium");
+    } else if (priority === "priority-low") {
+        targetContainer = document.querySelector(".priority-low");
+    }
 
-        // Déplace la carte dans le bon conteneur
-        if (targetContainer) {
-            targetContainer.appendChild(card);
-        }
-    };
+    // Déplace la carte dans le bon conteneur
+    if (targetContainer) {
+        targetContainer.appendChild(card);
+    }
+};
 
-// Fontionc pour vider mes divs de priorité dans le DOM
-function clearPriorityDiv() {
-    const priorityHigh = document.querySelector(".priority-high");
-    priorityHigh.innerHTML = `<h2>Urgent</h2>`; 
-
-    const priorityMedium = document.querySelector(".priority-medium");
-    priorityMedium.innerHTML = `<h2>Priorité normale</h2>`; 
-
-    const priorityLow = document.querySelector(".priority-low");
-    priorityLow.innerHTML = `<h2>Peut attendre</h2>`; 
-}
 
 // Fonction pour afficher les toDos dans le DOM
 function displayToDos() {
@@ -132,6 +135,8 @@ function saveToDos() {
     const priority = priorityInput;
 
     addToDosToArray(title, description, dueDate, priority);
+
+    addToDos();
 
     displayToDos();
 }

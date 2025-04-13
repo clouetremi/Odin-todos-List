@@ -144,3 +144,13 @@ function saveToDos() {
 
 addToDos();
 displayToDos();
+
+// Ajout de l'event pour supprimer un todos
+document.body.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-delete-to-dos")) {
+        const index = event.target.closest(".to-dos-card").getAttribute("data-index")
+        toDos.splice(index, 1);
+        displayToDos();
+    }
+})
+

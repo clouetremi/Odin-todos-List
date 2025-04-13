@@ -46,6 +46,7 @@ function createToDosCard(item, index) {
     <p><strong>Priority :</strong> ${item.priority}<p>
     <br>
     <button class="btn-delete-to-dos" type="button" data-id="${item.id}">Delete todos</button>
+    <button class="btn-change-status" type="button" data-id="${item.id}">Change todos status</button>
     `;
 
     return toDosCard;
@@ -91,8 +92,8 @@ function addToDos() {
     <input type="text" id="title" name="title" required><br><br>
 
     <label for="description">Description :</label>
-    <input type="text" id="description" name="description" required><br><br>
-
+    <textarea id="description" name="description" rows="5" cols="33" required></textarea><br><br>
+    
     <label for="due-date">Due Date :</label>
     <input type="text" id="due-date" name="due-date" required><br><br>
 
@@ -148,9 +149,26 @@ displayToDos();
 // Ajout de l'event pour supprimer un todos
 document.body.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn-delete-to-dos")) {
-        const index = event.target.closest(".to-dos-card").getAttribute("data-index")
+        const index = event.target.closest(".to-dos-card").getAttribute("data-index") //A partir du ubouton sur lequel on a cliqué, remonte jusqu'au parent le plus proche qui a la class .to-dos-card
         toDos.splice(index, 1);
         displayToDos();
-    }
-})
+    };
+});
 
+// Ajout de l'event pour changer le status d'un todos
+document.body.addEventListener("click", function(event) {
+if (event.target.classList.contains("btn-change-status")) {
+    const index = event.target.closest(".to-dos-card").getAttribute("data-index");
+    const todo = toDos[index]; 
+
+    if (todo.priority === "priority-high") {
+        todo.priority = "priority-medium";
+    } else if (todo.priority === "priority-medium") {
+        todo.priority = "priority-low";
+    } else {
+        todo.priority = "priority-high";
+    }
+
+    displayToDos();
+};
+});

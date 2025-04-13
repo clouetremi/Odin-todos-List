@@ -23,17 +23,17 @@
 
 
 .priority-high {
-    background-color: red;
+    background-color: rgb(255, 104, 104);
     border-radius: 5%;
 }
 
 .priority-medium {
-    background-color: rgb(109, 87, 231);
+    background-color: rgb(51, 143, 255);
     border-radius: 5%;
 }
 
 .priority-low {
-    background-color: rgb(99, 255, 146);
+    background-color: rgb(108, 255, 152);
     border-radius: 5%;
 }
 
@@ -46,7 +46,11 @@
 
 .to-dos-card h3,
 .to-dos-card p {
-    padding: 0.5rem;
+    padding: 0.3rem;
+}
+
+.to-dos-card button {
+margin: 0.5rem;
 }
 
 .to-dos-display {
@@ -63,3 +67,10 @@
     border-radius: 5%;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
+
+#to-dos-form button {
+    display: block;
+    margin: 0.5rem auto;
+
+}
+

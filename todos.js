@@ -88,13 +88,13 @@ function addToDos() {
     const toDosDisplay = document.querySelector(".to-dos-display");
     toDosDisplay.innerHTML = `
     <form id="to-dos-form">
-    <label for="title">Title :</label>
+    <label for="title">Titre :</label>
     <input type="text" id="title" name="title" required><br><br>
 
     <label for="description">Description :</label>
     <textarea id="description" name="description" rows="5" cols="33" required></textarea><br><br>
     
-    <label for="due-date">Due Date :</label>
+    <label for="due-date">Date limite :</label>
     <input type="text" id="due-date" name="due-date" required><br><br>
 
     <div>

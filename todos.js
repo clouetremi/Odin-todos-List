@@ -45,8 +45,8 @@ function createToDosCard(item, index) {
     <p><strong>Due Date :</strong> ${item.dueDate}</p>
     <p><strong>Priority :</strong> ${item.priority}<p>
     <br>
-    <button class="btn-delete-to-dos" type="button" data-id="${item.id}">Delete todos</button>
-    <button class="btn-change-status" type="button" data-id="${item.id}">Change todos status</button>
+    <button class="btn-delete-to-dos" type="button">Delete todos</button>
+    <button class="btn-change-status" type="button">Change todos status</button>
     `;
 
     return toDosCard;

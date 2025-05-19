@@ -50,7 +50,7 @@
 }
 
 .to-dos-card button {
-margin: 0.5rem;
+    margin: 0.5rem;
 }
 
 .to-dos-display {
@@ -71,6 +71,13 @@ margin: 0.5rem;
 #to-dos-form button {
     display: block;
     margin: 0.5rem auto;
-
 }
 
+.project-title {
+    padding: 1rem;
+    justify-content: center;
+    text-align: center;
+    background-color: rgb(227, 207, 207);
+    border-radius: 1%;
+    margin: 0.5rem 0.5rem;
+}

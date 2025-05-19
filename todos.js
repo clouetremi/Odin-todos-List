@@ -1,6 +1,27 @@
 // On crée un Array pour stocker nos todos
 
-const toDos = [];
+const projects = {
+    "default": []
+};
+
+function createProject(projectName) {
+    if (!projects[projectName]) {
+        projects[projectName] = [];
+    };
+};
+
+// Fonction pour faire apparaître le project actuel sur la page
+let activeProject = "default"; // Projet par défaut au début
+
+// Afficher le nom du projet actif dans le DOM
+function displayCurrentProjectName() {
+    const currentProject = document.querySelector(".project-title");
+    currentProject.innerHTML = `Projet actuel : <strong>${activeProject}</strong>`
+};
+
+// Besoin de call cette fonction chaque fois qu'on change de projet
+displayCurrentProjectName();
+
 
 class ToDos {
     constructor(title, description, dueDate, priority) {
@@ -12,9 +33,16 @@ class ToDos {
 };
 
 // Fonction pour ajouter untoDos à mon tableau
-function addToDosToArray(title, description, dueDate, priority) {
+function addToDosToProject(title, description, dueDate, priority, projectName = "default") {
     const newToDo = new ToDos(title, description, dueDate, priority);
-    toDos.push(newToDo);
+
+if (!projects[projectName]) {
+    projects[projectName] = [];
+}
+
+// Ajoute le todo dans le bon tableau
+projects[projectName].push(newToDo)
+
 }
 
 function clearPriorityContainers() {
@@ -22,7 +50,7 @@ function clearPriorityContainers() {
     toDosContainer.innerHTML = "";
 };
 
-// Fontionc pour vider mes divs de priorité dans le DOM
+// Fonction pour vider mes divs de priorité dans le DOM
 function clearPriorityDiv() {
     const priorityHigh = document.querySelector(".priority-high");
     priorityHigh.innerHTML = `<h2>Urgent</h2>`;
@@ -72,10 +100,12 @@ function appendCardToContainer(card, priority) {
 
 
 // Fonction pour afficher les toDos dans le DOM
-function displayToDos() {
+function displayToDos(projectName = "default") {
 
     clearPriorityContainers();
     clearPriorityDiv();
+
+    const toDos = projects[projectName]; // On récupère les todos tu projet sélectionné
 
     toDos.forEach((item, index) => {
         const card = createToDosCard(item, index);
@@ -135,11 +165,11 @@ function saveToDos() {
 
     const priority = priorityInput;
 
-    addToDosToArray(title, description, dueDate, priority);
+    addToDosToProject(title, description, dueDate, priority, "default");
 
     addToDos();
 
-    displayToDos();
+    displayToDos("default");
 }
 
 
@@ -150,8 +180,8 @@ displayToDos();
 document.body.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn-delete-to-dos")) {
         const index = event.target.closest(".to-dos-card").getAttribute("data-index") //A partir du ubouton sur lequel on a cliqué, remonte jusqu'au parent le plus proche qui a la class .to-dos-card
-        toDos.splice(index, 1);
-        displayToDos();
+        projects["default"].splice(index, 1);
+        displayToDos("default");
     };
 });
 
@@ -159,7 +189,7 @@ document.body.addEventListener("click", function (event) {
 document.body.addEventListener("click", function(event) {
 if (event.target.classList.contains("btn-change-status")) {
     const index = event.target.closest(".to-dos-card").getAttribute("data-index");
-    const todo = toDos[index]; 
+    const todo = projects["default"][index]; 
 
     if (todo.priority === "priority-high") {
         todo.priority = "priority-medium";
@@ -169,6 +199,7 @@ if (event.target.classList.contains("btn-change-status")) {
         todo.priority = "priority-high";
     }
 
-    displayToDos();
+    displayToDos("default");
 };
 });
+

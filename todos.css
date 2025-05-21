@@ -81,3 +81,13 @@
     border-radius: 1%;
     margin: 0.5rem 0.5rem;
 }
+
+.dropdown-container,
+#new-project-form {
+    padding: 1rem;
+    justify-content: center;
+    text-align: center;
+    background-color: bisque;
+    border-radius: 1%;
+    margin: 0.5rem 0.5rem;
+}

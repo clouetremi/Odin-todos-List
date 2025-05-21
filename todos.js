@@ -206,11 +206,11 @@ function saveToDos() {
 
     const priority = priorityInput;
 
-    addToDosToProject(title, description, dueDate, priority, "default");
+    addToDosToProject(title, description, dueDate, priority, activeProject);
 
     addToDos();
 
-    displayToDos("default");
+    displayToDos(activeProject);
 
     updateProjectDropdown();
 }
@@ -223,8 +223,8 @@ displayToDos();
 document.body.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn-delete-to-dos")) {
         const index = event.target.closest(".to-dos-card").getAttribute("data-index") //A partir du ubouton sur lequel on a cliqué, remonte jusqu'au parent le plus proche qui a la class .to-dos-card
-        projects["default"].splice(index, 1);
-        displayToDos("default");
+        projects[activeProject].splice(index, 1);
+        displayToDos(activeProject);
     };
 });
 
@@ -232,7 +232,7 @@ document.body.addEventListener("click", function (event) {
 document.body.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn-change-status")) {
         const index = event.target.closest(".to-dos-card").getAttribute("data-index");
-        const todo = projects["default"][index];
+        const todo = projects[activeProject][index];
 
         if (todo.priority === "priority-high") {
             todo.priority = "priority-medium";
@@ -242,7 +242,7 @@ document.body.addEventListener("click", function (event) {
             todo.priority = "priority-high";
         }
 
-        displayToDos("default");
+        displayToDos(activeProject);
     };
 });
 

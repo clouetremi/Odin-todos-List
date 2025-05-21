@@ -1,17 +1,8 @@
-// On crée un Array pour stocker nos todos
-
 const projects = {
     "default": []
 };
 
-function createProject(projectName) {
-    if (!projects[projectName]) {
-        projects[projectName] = [];
-    };
-};
-
-// Fonction pour faire apparaître le project actuel sur la page
-let activeProject = "default"; // Projet par défaut au début
+let activeProject = "default"; 
 
 // Afficher le nom du projet actif dans le DOM
 function displayCurrentProjectName() {
@@ -21,6 +12,56 @@ function displayCurrentProjectName() {
 
 // Besoin de call cette fonction chaque fois qu'on change de projet
 displayCurrentProjectName();
+
+// Fonction pour créer un projet si le nom n'existe pas déjà
+function createProject(projectName) {
+    const name = projectName.trim(); // supprime les espaces inutiles
+    if (name && !projects[name]) {
+        projects[name] = [];
+        activeProject = name; // on passe au nouveau projet
+        updateProjectDropdown(); 
+        displayCurrentProjectName(); // Met à jour l'affichage
+    }
+}
+
+// Gestion du formulaire de création 
+document.querySelector("#new-project-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const input = document.querySelector("#new-project-name");
+    const newProjectName = input.value.trim(); 
+
+    createProject(newProjectName);
+
+    // On vide le champ après soumission
+    input.value = "";
+}); 
+
+function updateProjectDropdown() {
+const projectSelect = document.querySelector("#project-select");
+projectSelect.innerHTML = ""; // on vide la liste déroulante
+
+// Pour chaque projet dans l'objet projects, on crée une option
+for (const projectName in projects) {
+    const option = document.createElement("option"); 
+    option.value = projectName; 
+    option.textContent = projectName; 
+
+    // Si c'est le projet actif, on le sélectionne
+    if (projectName === activeProject) {
+        option.selected = true; 
+    }
+
+    projectSelect.appendChild(option); 
+}
+
+// Ajoute un event listener pour changer de projet quand on sélectionne une autre option
+projectSelect.addEventListener("change", (event) => {
+    activeProject = event.target.value; 
+    displayCurrentProjectName();
+    displayToDos(activeProject);
+});
+}
 
 
 class ToDos {
@@ -36,12 +77,12 @@ class ToDos {
 function addToDosToProject(title, description, dueDate, priority, projectName = "default") {
     const newToDo = new ToDos(title, description, dueDate, priority);
 
-if (!projects[projectName]) {
-    projects[projectName] = [];
-}
+    if (!projects[projectName]) {
+        projects[projectName] = [];
+    }
 
-// Ajoute le todo dans le bon tableau
-projects[projectName].push(newToDo)
+    // Ajoute le todo dans le bon tableau
+    projects[projectName].push(newToDo)
 
 }
 
@@ -170,6 +211,8 @@ function saveToDos() {
     addToDos();
 
     displayToDos("default");
+
+    updateProjectDropdown();
 }
 
 
@@ -186,20 +229,20 @@ document.body.addEventListener("click", function (event) {
 });
 
 // Ajout de l'event pour changer le status d'un todos
-document.body.addEventListener("click", function(event) {
-if (event.target.classList.contains("btn-change-status")) {
-    const index = event.target.closest(".to-dos-card").getAttribute("data-index");
-    const todo = projects["default"][index]; 
+document.body.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-change-status")) {
+        const index = event.target.closest(".to-dos-card").getAttribute("data-index");
+        const todo = projects["default"][index];
 
-    if (todo.priority === "priority-high") {
-        todo.priority = "priority-medium";
-    } else if (todo.priority === "priority-medium") {
-        todo.priority = "priority-low";
-    } else {
-        todo.priority = "priority-high";
-    }
+        if (todo.priority === "priority-high") {
+            todo.priority = "priority-medium";
+        } else if (todo.priority === "priority-medium") {
+            todo.priority = "priority-low";
+        } else {
+            todo.priority = "priority-high";
+        }
 
-    displayToDos("default");
-};
+        displayToDos("default");
+    };
 });
 

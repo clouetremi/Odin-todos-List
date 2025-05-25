@@ -5,7 +5,7 @@ import { displayCurrentProjectName } from "./display.js";
 import { displayToDos } from "./display.js";
 
 export function updateProjectDropdown() {
-    const select = document.querySelector(".project-select"); 
+    const select = document.querySelector("#project-select"); 
     select.innerHTML = ""; 
 
     for (const name in projects) {

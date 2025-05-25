@@ -1,6 +1,6 @@
 //form.js
 
-import { addToDosToProject } from "../data.js";
+import { activeProject, addToDosToProject } from "../data.js";
 import { displayToDos } from "./display.js";
 
 export function addToDos() {
@@ -26,9 +26,9 @@ export function addToDos() {
         const date = document.querySelector("#due-date").value; 
         const priority = document.querySelector('input[name="priority"]:checked').value;
 
-        addToDosToProject(title, desc, date, priority); 
+        addToDosToProject(title, desc, date, priority, activeProject); 
         addToDos(); 
-        displayToDos(); 
+        displayToDos(activeProject); 
     });
 }
 

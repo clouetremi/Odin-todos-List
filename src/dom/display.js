@@ -1,9 +1,10 @@
 // display.js
 
-import { projects } from "../data.js"; 
+import { projects } from "../data.js";
+import { format, parseISO, differenceInDays } from "date-fns";
 
 export function displayCurrentProjectName(activeProject) {
-    const currentProject = document.querySelector(".project-title"); 
+    const currentProject = document.querySelector(".project-title");
     currentProject.innerHTML = `Projet actuel : <strong>${activeProject}</strong>`;
 }
 
@@ -17,30 +18,47 @@ function createToDosCard(item, index) {
     const card = document.createElement("div");
     card.classList.add("to-dos-card");
     card.setAttribute("data-index", index);
+
+    // formatage de la date avec data-fns
+    let dueDateHTML = "Pas de date";
+    if (item.dueDate) {
+        console.log("Raw dueDate:", item.dueDate);
+        try {
+            const parsedDate = parseISO(item.dueDate);
+            console.log("Parsed date object:", parsedDate);
+            const formattedDate = format(parsedDate, "dd/MM/yyyy");
+            const daysLeft = differenceInDays(parsedDate, new Date());
+
+            dueDateHTML = `${formattedDate} (${daysLeft} jour${Math.abs(daysLeft) === 1 ? '' : 's'} ${daysLeft < 0 ? 'en retard' : 'restant(s)'})`;
+        } catch (error) {
+            dueDateHTML = "Date invalide";
+        }
+    }
+
+
     card.innerHTML = `
     <h3><strong>Title :</strong> ${item.title}</h3>
     <p><strong>Description :</strong> ${item.description}</p>
-    <p><strong>Due Date :</strong> ${item.dueDate}</p>
+    <p><strong>Due Date :</strong> ${dueDateHTML}</p>
     <p><strong>Priority :</strong> ${item.priority}</p>
     <button class="btn-delete-to-dos">Delete todos</button>
     <button class="btn-change-status">Change todos status</button>
     `;
-    return card; 
+    return card;
 }
 
 function appendCardToContainer(card, priority) {
     const container = document.querySelector(`.${priority}`);
-    if (container) container.appendChild(card); 
+    if (container) container.appendChild(card);
 }
 
 export function displayToDos(projectName = "default") {
-    document.querySelector(".to-dos-container").innerHTML = ""; 
-    clearPriorityDiv(); 
+    document.querySelector(".to-dos-container").innerHTML = "";
+    clearPriorityDiv();
 
-const toDos = projects[projectName]; 
-toDos.forEach((todo, index) => {
-    const card = createToDosCard(todo, index); 
-    appendCardToContainer(card, todo.priority);
-});
+    const toDos = projects[projectName];
+    toDos.forEach((todo, index) => {
+        const card = createToDosCard(todo, index);
+        appendCardToContainer(card, todo.priority);
+    });
 }
-

@@ -9,7 +9,7 @@ export function addToDos() {
     <form id="to-dos-form">
     <input type="text" id="title" placeholder="Titre" required>
     <textarea id="description" placeholder="Description" required></textarea>
-    <input type="text" id="due-date" placeholder="Date" required>
+    <input type="date" id="due-date" placeholder="Date" required>
     <div>
     <label><input type="radio" name="priority" value="priority-high">Urgent</label>
     <label><input type="radio" name="priority" value="priority-medium">Normal</label>

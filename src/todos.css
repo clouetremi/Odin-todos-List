@@ -23,17 +23,17 @@
 
 
 .priority-high {
-    background-color: rgb(255, 104, 104);
+    background-color: #ef4444;
     border-radius: 5%;
 }
 
 .priority-medium {
-    background-color: rgb(51, 143, 255);
+    background-color: #3b82f6;
     border-radius: 5%;
 }
 
 .priority-low {
-    background-color: rgb(108, 255, 152);
+    background-color: #10b981;
     border-radius: 5%;
 }
 

@@ -37,12 +37,12 @@ function createToDosCard(item, index) {
 
 
     card.innerHTML = `
-    <h3><strong>Title :</strong> ${item.title}</h3>
+    <h3><strong>Titre :</strong> ${item.title}</h3>
     <p><strong>Description :</strong> ${item.description}</p>
-    <p><strong>Due Date :</strong> ${dueDateHTML}</p>
-    <p><strong>Priority :</strong> ${item.priority}</p>
-    <button class="btn-delete-to-dos">Delete todos</button>
-    <button class="btn-change-status">Change todos status</button>
+    <p><strong>Date d'échéance :</strong> ${dueDateHTML}</p>
+    <p><strong>Priorité :</strong> ${item.priority}</p>
+    <button class="btn-delete-to-dos">Supprimer ce todos</button>
+    <button class="btn-change-status">Changer la priorité</button>
     `;
     return card;
 }
